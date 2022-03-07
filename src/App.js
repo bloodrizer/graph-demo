@@ -1,12 +1,17 @@
 import './App.css';
 import React from 'react';
 
-import { Card, Paper} from '@mui/material';
+import { Card, Paper, Typography} from '@mui/material';
 import Graph from "./app/Graph";
 import Parser from "./app/Parser";
 
 import GraphInputParser from "./model/GraphInputParser";
 import GraphModel from "./model/GraphModel";
+import styled from "styled-components";
+
+const CardWrapper = styled.div`
+    padding: 25px;
+`;
 
 class App extends React.Component {
 
@@ -60,14 +65,27 @@ class App extends React.Component {
         <div className="app">
           <Paper>
             <Card>
-              <Parser 
-                onParserInputChange={this.onParserInputChange} 
-                value={this.state.input} 
-                isError={this.state.hasError}
-                errorMessage={this.state.errorMessage}
-              />
+              <CardWrapper>
+                <Typography variant="overline">MuleSoft coding assignment</Typography>
+                <Typography variant="body2">Please edit the text to see live updates</Typography>
+              </CardWrapper>
             </Card>
-            <Graph model={this.state.manifest}/>
+            <Card>
+              <CardWrapper>
+                
+                <Parser 
+                  onParserInputChange={this.onParserInputChange} 
+                  value={this.state.input} 
+                  isError={this.state.hasError}
+                  errorMessage={this.state.errorMessage}
+                />
+              </CardWrapper>
+            </Card>
+
+            <CardWrapper>
+              <Graph model={this.state.manifest}/>
+            </CardWrapper>
+
           </Paper>
         </div>
       </>

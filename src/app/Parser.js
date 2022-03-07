@@ -1,10 +1,5 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import styled from "styled-components";
-
-const FormWrapper = styled.div`
-    padding: 25px;
-`;
 
 class Graph extends React.Component {
     constructor(props){
@@ -23,7 +18,6 @@ class Graph extends React.Component {
     render(){
         return (
             <>
-                <FormWrapper>
                 <TextField
                     onChange={this.onChange}
                     multiline
@@ -39,7 +33,6 @@ class Graph extends React.Component {
                         "e.g. D DEPENDS A B \nE DEPENDS C \nF DEPENDS D E"
                     }
                 />
-                </FormWrapper>
             </>
         )
     }

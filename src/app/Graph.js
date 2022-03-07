@@ -1,12 +1,6 @@
 import React from 'react';
 import mermaid from 'mermaid';
 
-import styled from "styled-components";
-
-const GraphWrapper = styled.div`
-    padding: 25px;
-`;
-
 class Graph extends React.Component {
     constructor(props){
         super(props);
@@ -36,13 +30,13 @@ class Graph extends React.Component {
 
     render(){    
         return (
-            <GraphWrapper> 
-                {!this.state.svg && "Please edit the graph textbox to see live updates"}
+            <> 
+                {!this.state.svg && "Loading..."}
                 {this.state.svg && <div
                     dangerouslySetInnerHTML={{ __html: this.state.svg }}
                 >
                 </div>}
-            </GraphWrapper>
+            </>
             
         )
     }
