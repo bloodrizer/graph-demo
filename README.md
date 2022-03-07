@@ -8,8 +8,8 @@ Run `npm install` && `npm start`
 
 You can now view graph-demo in the browser.
 
-  Local:            http://localhost:3000
-  On Your Network:  http://[NETWORK IP]:3000
+*  Local:            http://localhost:3000
+*  On Your Network:  http://[NETWORK IP]:3000
 
 
 ### Live Demo
