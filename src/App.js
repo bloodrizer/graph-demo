@@ -9,34 +9,49 @@ import GraphInputParser from "./model/GraphInputParser";
 import GraphModel from "./model/GraphModel";
 
 class App extends React.Component {
+
+  parser = null;
+
   constructor(props){
     super(props);
 
     this.state = {
-      input: ""
+      input: "",
+      hasError: false
     }
+    this.parser = new GraphInputParser();
+    this.model = new GraphModel();
   }
 
   onParserInputChange = (input) => {
     this.setState({
-      input: input
+      input: input,
+      hasError: false
     });
   }
+
+  componentDidUpdate(prevProps, prevState){
+    if (prevState.input !== this.state.input){
+        this.model = new GraphModel();
+        try {
+          this.parser.parse(this.state.input, this.model);
+        } catch (ex){
+          this.setState({ hasError: true, errorMessage: ex.message });
+        }
+    }
+}
   
   render(){
-    let parser = new GraphInputParser();
-    let model = new GraphModel();
-
-    parser.parse(this.state.input, model);
-
-    console.log("model:", model);
     return (
       <div className="app">
         <Paper>
           <Card>
+            {   
+            (this.state.hasError) && <div className="error">Error: {this.state.errorMessage}</div>
+            }
             <Parser onParserInputChange={this.onParserInputChange} value={this.state.input}/>
           </Card>
-          <Graph model={model.getModelManifest()}/>
+          <Graph model={this.model.getModelManifest()}/>
         </Paper>
       </div>
     );

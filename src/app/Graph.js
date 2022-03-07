@@ -13,14 +13,14 @@ class Graph extends React.Component {
     componentDidMount(){
         mermaid.initialize({ startOnLoad:true });
     }
-    
+
     componentDidUpdate(prevProps){
         if (prevProps.model !== this.props.model){
             mermaid.mermaidAPI.render("mermaid-graph", this.props.model, (svg) => {this.setState({svg: svg})});
         }
     }
 
-    render(){       
+    render(){    
         return (
             <> 
                 {!this.state.svg && "Loading..."}

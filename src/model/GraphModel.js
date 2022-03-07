@@ -1,4 +1,7 @@
-/* eslint-disable no-multi-str */
+/**
+ * Class representing graph nodes and their dependencies.
+ * Acts as amediator between input layer and a rendering library
+ */
 class GraphModel {
     nodes = null;
     constructor(){
@@ -29,6 +32,10 @@ class GraphModel {
         }
     }
 
+    /**
+     * 
+     * @returns a string representing a mermaidjs graph definition
+     */
     getModelManifest(){
         /*
         graph TD
@@ -39,7 +46,7 @@ class GraphModel {
         let manifest = "graph TD\n";
         for (let id in this.nodes){
             for (let linkToId of this.nodes[id].linksTo){
-                manifest = manifest + id + " --> " + linkToId +"\n"
+                manifest = manifest + id + " --> " + linkToId + "\n";
             }
         }
 
