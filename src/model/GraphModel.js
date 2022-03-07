@@ -42,26 +42,21 @@ class GraphModel {
         }
 
         for (let i in dependencies){
-            let parentId = dependencies[i];
-            let parent = this.nodes[parentId];
+            let childId = dependencies[i];
 
-            if (!parent){
-                parent = {
+            if (!this.nodes[childId]){
+                this.nodes[childId] = {
                     linksTo: []
                 };
-                this.nodes[parentId] = parent;
             }
 
-            if (parent.linksTo.includes(id)){
-                throw new Error("duplicate link: " + parentId + " -> " + id);
-            }
-            if (parentId === id){
+            if (childId === id){
                 throw new Error(id + " can't point to itself");
             }
-            if (this.loopExists(parentId, id)){
+            if (this.loopExists(id, childId)){
                 throw new Error("graph can't have circular dependencies");
             }
-            parent.linksTo.push(id);
+            this.nodes[id].linksTo.push(childId);
         }
     }
 
