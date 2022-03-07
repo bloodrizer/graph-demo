@@ -1,4 +1,5 @@
-<img width="680" alt="image" src="https://user-images.githubusercontent.com/621312/156954107-7463906f-653f-4235-bfcf-71f58aef04b7.png">
+<img width="655" alt="image" src="https://user-images.githubusercontent.com/621312/156966511-37f4429e-6b8f-4ce4-8d60-6e22d9e62091.png">
+
 
 # Installation
 
