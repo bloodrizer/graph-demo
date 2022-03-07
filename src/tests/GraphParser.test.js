@@ -9,6 +9,6 @@ test('Parser must return proper model manifest', () => {
     let input = "D DEPENDS A B \n E DEPENDS C \n F DEPENDS D E";
     parser.parse(input, model);
 
-    expect(model.nodes.length).toBe(5);
+    expect(Object.keys(model.nodes).length).toBe(6);
     expect(model.getModelManifest()).toBeDefined();
 });

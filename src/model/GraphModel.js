@@ -34,15 +34,16 @@ class GraphModel {
 
     /**
      * 
-     * @returns a string representing a mermaidjs graph definition
+     * @returns a string representing a mermaidjs graph definition e.g.
+     * ```
+     *  graph TD
+     *       A[Client] --> B[Load Balancer]
+     *       B --> C[Server01]
+     *       B --> D[Server02]
+     * ```
      */
     getModelManifest(){
-        /*
-        graph TD
-            A[Client] --> B[Load Balancer]
-            B --> C[Server01]
-            B --> D[Server02]
-        */
+        
         let manifest = "graph TD\n";
         for (let id in this.nodes){
             for (let linkToId of this.nodes[id].linksTo){

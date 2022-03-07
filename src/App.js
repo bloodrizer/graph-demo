@@ -46,10 +46,12 @@ class App extends React.Component {
       <div className="app">
         <Paper>
           <Card>
-            {   
-            (this.state.hasError) && <div className="error">Error: {this.state.errorMessage}</div>
-            }
-            <Parser onParserInputChange={this.onParserInputChange} value={this.state.input}/>
+            <Parser 
+              onParserInputChange={this.onParserInputChange} 
+              value={this.state.input} 
+              isError={this.state.hasError}
+              errorMessage={this.state.errorMessage}
+            />
           </Card>
           <Graph model={this.model.getModelManifest()}/>
         </Paper>
