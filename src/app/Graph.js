@@ -16,22 +16,29 @@ class Graph extends React.Component {
         }
     }
 
+    updateGraph(){
+        //force parse for easy debugging
+        mermaid.mermaidAPI.parse(this.props.model);
+        mermaid.mermaidAPI.render("mermaid-graph", this.props.model, (svg) => {this.setState({svg: svg})});
+    }
+
     componentDidMount(){
-        mermaid.initialize({ startOnLoad:true });
+        if (this.props.model){
+            this.updateGraph();
+        }
     }
 
     componentDidUpdate(prevProps){
         if (prevProps.model !== this.props.model){
-            mermaid.mermaidAPI.render("mermaid-graph", this.props.model, (svg) => {this.setState({svg: svg})});
+            this.updateGraph();
         }
     }
 
     render(){    
         return (
             <GraphWrapper> 
-                {!this.state.svg && "Loading..."}
-                {this.state.svg && <div 
-                    className="mermaid"
+                {!this.state.svg && "Please edit the graph textbox to see live updates"}
+                {this.state.svg && <div
                     dangerouslySetInnerHTML={{ __html: this.state.svg }}
                 >
                 </div>}

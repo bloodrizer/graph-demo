@@ -8,11 +8,38 @@ class GraphModel {
         this.nodes = {}
     }
 
+    
+    loopExists(fromId, toId){
+        let toIds = this.nodes[toId].linksTo;
+        if (!toIds.length){
+            return false;
+        }
+        let loopExists = toIds.find((id) => {
+            return fromId === id;
+        });
+        if (loopExists) { return true; }
+        loopExists = toIds.find(
+            nextToId => this.loopExists(fromId, nextToId)
+        );
+
+        return loopExists;
+    }
+
+    /**
+     * Adds a node to a model and links it based on dependencies.
+     * 
+     * If graph has duplicate links or circular dependencies, exception will be thrown
+     * 
+     * @param {*} id 
+     * @param {*} dependencies 
+     */
     addNode(id, dependencies){
-        console.log("adding node", id, dependencies);
-        this.nodes[id] = {
-            linksTo: []
-        };
+
+        if (!this.nodes[id]){
+            this.nodes[id] = {
+                linksTo: []
+            };
+        }
 
         for (let i in dependencies){
             let parentId = dependencies[i];
@@ -27,6 +54,12 @@ class GraphModel {
 
             if (parent.linksTo.includes(id)){
                 throw new Error("duplicate link: " + parentId + " -> " + id);
+            }
+            if (parentId === id){
+                throw new Error(id + " can't point to itself");
+            }
+            if (this.loopExists(parentId, id)){
+                throw new Error("graph can't have circular dependencies");
             }
             parent.linksTo.push(id);
         }
@@ -43,6 +76,10 @@ class GraphModel {
      * ```
      */
     getModelManifest(){
+
+        if (!Object.keys(this.nodes).length){
+            return null;
+        }
         
         let manifest = "graph TD\n";
         for (let id in this.nodes){

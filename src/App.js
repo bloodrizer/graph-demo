@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 
-import { Card, Paper } from '@mui/material';
+import { Card, Paper} from '@mui/material';
 import Graph from "./app/Graph";
 import Parser from "./app/Parser";
 
@@ -32,32 +32,46 @@ class App extends React.Component {
     });
   }
 
+  updateModel(){
+    this.model = new GraphModel();
+    try {
+      this.parser.parse(this.state.input, this.model);
+    } catch (ex){
+      this.setState({ hasError: true, errorMessage: ex.message });
+    }
+    this.setState({
+      manifest: this.model.getModelManifest()
+    })
+  }
+
+  componentDidMount(){
+    this.updateModel();
+  }
+
   componentDidUpdate(prevProps, prevState){
     if (prevState.input !== this.state.input){
-        this.model = new GraphModel();
-        try {
-          this.parser.parse(this.state.input, this.model);
-        } catch (ex){
-          this.setState({ hasError: true, errorMessage: ex.message });
-        }
+        this.updateModel();
     }
 }
   
   render(){
     return (
-      <div className="app">
-        <Paper>
-          <Card>
-            <Parser 
-              onParserInputChange={this.onParserInputChange} 
-              value={this.state.input} 
-              isError={this.state.hasError}
-              errorMessage={this.state.errorMessage}
-            />
-          </Card>
-          <Graph model={this.model.getModelManifest()}/>
-        </Paper>
-      </div>
+      <>
+        <div className="app">
+          <Paper>
+            <Card>
+              <Parser 
+                onParserInputChange={this.onParserInputChange} 
+                value={this.state.input} 
+                isError={this.state.hasError}
+                errorMessage={this.state.errorMessage}
+              />
+            </Card>
+            <Graph model={this.state.manifest}/>
+          </Paper>
+        </div>
+      </>
+      
     );
   }
   
