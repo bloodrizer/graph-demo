@@ -16,8 +16,9 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      input: "",
-      hasError: false
+      input: "D DEPENDS A B \nE DEPENDS C \nF DEPENDS D E",
+      hasError: false,
+      errorMessage: null
     }
     this.parser = new GraphInputParser();
     this.model = new GraphModel();
@@ -26,7 +27,8 @@ class App extends React.Component {
   onParserInputChange = (input) => {
     this.setState({
       input: input,
-      hasError: false
+      hasError: false,
+      errorMessage: null
     });
   }
 
